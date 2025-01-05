@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: namespace-checker
+spec:
+  schedule: "*/5 * * * *"  # Runs every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: namespace-checker
+              image: sabarlabsenv/ephemeral:v1.2  # Use your custom image here
+              env:
+                - name: SLACK_WEBHOOK_URL
+                  value: "<your-slack-webhook-url>"  # Replace with your actual Slack webhook URL
+          restartPolicy: OnFailure
